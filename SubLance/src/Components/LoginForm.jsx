@@ -53,11 +53,11 @@ function Login() {
           <label>
             <a href="#">Forgot Password?</a> | <a href="#">Join with Us</a>
           </label >
-
         </div>
         </div>
     </div>
   );
 }
-
+ 
+        
 export default Login;
