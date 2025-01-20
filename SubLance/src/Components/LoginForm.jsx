@@ -10,18 +10,41 @@ function Login() {
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
+    console.log(event.target.value)
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Email:', email);
     console.log('Password:', password);
-    setEmail("");
-    setPassword("");
+    const body = {
+      email , 
+      password ,
+    };
+   try{
+      const request = await fetch ('http://localhoost:8080/token' , { 
+        method : 'POST',
+        header : {
+          'Content-type' : application/json,
+        },
+        body : JSON.stringify(body),
+      });
+      if(!Response.ok){
+        throw new Error ('HTTP Error : ${response.status}' );
+      }
+      const data = await Response.json();
+      console.log('Token : ', data);
+
+      setEmail("");
+      setPassword("");
+   }catch(error){
+    console.log('Error during request',error)
+   }
+    
   };
 
   return (
