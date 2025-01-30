@@ -10,7 +10,6 @@ function Login() {
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
-    console.log(event.target.value)
   };
 
   const handlePasswordChange = (event) => {
