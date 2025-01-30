@@ -1,89 +1,96 @@
-import React, { useState } from 'react';
-import Logo from '../assets/Logo.png'
+import React, { useState, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from './context/AuthContext';
+import Logo from '../assets/Logo.png';
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import Styles from './LoginForm.module.css'
+import StylesLogin from './LoginForm.module.css';
+// http://localhost:8080/token
+// POST
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { setToken } = useContext(AuthContext); // Use Context to store token globally
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Email:', email);
-    console.log('Password:', password);
-    const body = {
-      email , 
-      password ,
-    };
-   try{
-      const request = await fetch ('http://localhoost:8080/token' , { 
-        method : 'POST',
-        header : {
-          'Content-type' : application/json,
-        },
-        body : JSON.stringify(body),
+    setError("");
+
+    try {
+      const response = await fetch('http://localhost:8080/token', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
       });
-      if(!Response.ok){
-        throw new Error ('HTTP Error : ${response.status}' );
+
+      if (!response.ok) {
+        setError("Invalid email or password");
+        return;
       }
-      const data = await Response.json();
-      console.log('Token : ', data);
+
+      const data = await response.json();
+      const token = data.token;
+      const userRole = data.role;
+
+      localStorage.setItem("authToken", token);
+      setToken(token);
+
+      userRole === "CREATOR" ? navigate('/creatorHome') : navigate('/freelancerHome');
 
       setEmail("");
       setPassword("");
-   }catch(error){
-    console.log('Error during request',error)
-   }
-    
+    } catch (error) {
+      setError("Something went wrong. Please try again.");
+      console.error('Error during login:', error);
+      setEmail("");
+      setPassword("");
+    }
   };
 
   return (
-    <div className={Styles.loginContainer}>
-        <div className={Styles.logoContainer}>
+    <div className={StylesLogin.wrapper}>
+      <div className={StylesLogin.loginContainer}>
+        <div className={StylesLogin.logoContainer}>
           <img src={Logo} alt="Logo" />
           <h1>SubLance</h1>
         </div>
         <div>
           <h2>Member Login</h2>
+          {error && <p className={StylesLogin.error}>{error}</p>}
           <form onSubmit={handleSubmit}>
-            <div className={Styles.inputGroup}>
+            <div className={StylesLogin.inputGroup}>
                 <input
                   type="email"
                   placeholder="example@gmail.com"
                   value={email}
-                  onChange={handleEmailChange}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
-                <span className={Styles.inputIcon}><MdEmail /></span>
+                <span className={StylesLogin.inputIcon}><MdEmail /></span>
             </div>
-            <div className={Styles.inputGroup}>
+            <div className={StylesLogin.inputGroup}>
                 <input
                   type="password"
                   placeholder="Password"
                   value={password}
-                  onChange={handlePasswordChange}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                <span className={Styles.inputIcon}><FaLock /></span>
+                <span className={StylesLogin.inputIcon}><FaLock /></span>
             </div>
             <button type="submit">Login</button>
           </form>
-          <div className={Styles.options}>
+          <div className={StylesLogin.options}>
             <label>
-              <a href="#">Forgot Password?</a> | <a href="#">Join with Us</a>
+              <a href="#">Forgot Password?</a> | <a href="/register">Join with Us</a>
             </label >
           </div>
         </div>
     </div>
+    </div>
   );
 }
- 
-        
+
 export default Login;
+

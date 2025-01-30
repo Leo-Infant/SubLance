@@ -1,0 +1,28 @@
+
+  .pageContainer {
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    background-color: #FFFDF0;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .backButton {
+    position: absolute;
+    left: 0; /* Align the back button to the left */
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .headerTitle {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+  }

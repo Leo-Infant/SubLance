@@ -4,12 +4,13 @@ body {
     margin: 0;
     padding: 0;
     background-color: #D9DFC6;
+  }
+  .wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
   }
-  
   .loginContainer {
     background-color: #FFFDF0;
     width: 700px; 
@@ -38,7 +39,7 @@ body {
     margin: 5px 0;
   }
   
-  h2 {
+  .loginContainer h2 {
     font-size: 20px;
     color: #3D3D3D;
     margin-bottom: 20px;
@@ -67,7 +68,7 @@ body {
     pointer-events: none;
   }
   
-  button {
+ .loginContainer button {
     background-color:#3D3D3D;
     color: #fff;
     border: none;

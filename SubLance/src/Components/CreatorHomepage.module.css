@@ -1,0 +1,298 @@
+
+.homepage {
+    font-family: Arial, sans-serif;
+    background-color: #D9DFC6;
+    padding: 0;
+    margin: 0;
+
+  }
+  .header {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 10px 10px;
+    background-color: #FFFDF0;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #e0e0e0; /* Light border on top for better visibility */
+  }
+  .logo {
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #3D3D3D;
+  }
+  .logo img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+  }
+  
+  .navLinks {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+
+  .navLink{
+    color: #3D3D3D;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px 15px;
+  }
+  .navLink:focus{
+    outline: none;
+  }
+  .noPosts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    font-size: 1.5rem;
+    color: #555;
+  }
+  .postsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .postCard {
+    background-color: #FFFDF0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    width: calc(50% - 20px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+  }
+  
+  .postCard p {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #3D3D3D;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .editButton,
+  .proposalsButton {
+    background-color: #3D3D3D;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .editButton:hover,
+  .proposalsButton:hover {
+    background-color:  hsl(0, 0%, 35%);
+  }
+  
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px; 
+    font-size: 16px; 
+    font-family: Arial, sans-serif;
+    padding-top: 20px;
+    padding-bottom: 5px;
+  }
+  
+  .paginationButton {
+    text-decoration: none;
+    color: black; 
+    cursor: pointer;
+    font-weight: bold; 
+    user-select: none;
+  }
+  
+  .paginationButton:hover {
+    text-decoration: none;
+  }
+  
+  .paginationButton.disabled {
+    color: hsl(0, 0%, 35%);
+    pointer-events: none;
+    cursor: not-allowed; 
+  }
+  
+  .pageInfo {
+    color: #333; 
+    font-size: 14px; 
+    user-select: none;
+  }
+  
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal {
+    background: #EFF3EA;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal h2 {
+    margin-bottom: 20px;
+  }
+  
+  .modal label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  .modal input {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .modalButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .modal button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .confirmButton , .cancelButton{
+    background-color: #3D3D3D;
+    color: white;
+  }
+ .cancelButton:hover{
+    background-color: hsl(0, 0%, 35%);
+  }
+.confirmButton:hover{
+    background-color: hsl(0, 0%, 35%);
+  }
+  .deleteButton {
+    background: #d32f2f;
+    color: white;
+  }
+  .deleteButton:hover{
+    background-color: #f44336e1;
+  }
+  .errorText {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+  .ProposalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .proposalModal {
+    background: #EFF3EA;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .proposalsContainer {
+    max-height: 300px; /* Allow only 3 proposals worth of height */
+    overflow-y: auto; /* Enable vertical scrolling for more proposals */
+    padding-right: 10px; /* Add right padding for better readability near the scroll bar */
+  }
+  .proposalsContainer::-webkit-scrollbar {
+    width: 8px; /* Customize scrollbar width */
+  }
+  .proposalsContainer::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+  .proposalsContainer::-webkit-scrollbar-thumb:hover {
+    background: #aaa; /* Darken scrollbar on hover */
+  }  
+  
+  .modal h2 {
+    margin-bottom: 20px;
+  }
+  
+  .proposalCard {
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .proposalButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .acceptButton {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .acceptButton:hover{
+    background-color: hsla(122, 39%, 49%, 0.858);
+  }
+  .rejectButton {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .rejectButton:hover{
+    background-color: #f44336e1;
+  }
+  .closeButton {
+    background-color: #3D3D3D;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  .closeButton:hover{
+    background-color:hsl(0, 0%, 35%);
+  }
+  

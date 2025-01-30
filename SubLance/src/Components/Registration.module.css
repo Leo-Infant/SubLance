@@ -1,0 +1,115 @@
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #D9DFC6;
+}   
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: #FFFDF0;
+    width: 800px; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .logoContainer{
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    margin-left: 40px;
+}
+
+.logoContainer img {
+  width:210px;
+  margin-bottom: 10px;
+  
+}
+.logoContainer h1 {
+  font-size: 50px;
+  color:#3D3D3D;
+  margin: 5px 0;
+}
+
+.input1 img{
+  width: 15px;
+  height: 15px;
+  margin-left: -30px;
+  margin-bottom: -4px;
+
+}
+
+.inputs{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+  box-sizing: border-box;
+  max-width:500px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+}
+.inputs input{
+  padding: 10px 15px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 15px;
+  box-sizing: border-box; 
+}
+.input1 select{
+  background-color: #EFF3EA;
+  padding: 10px 15px;
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-sizing: border-box; 
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  border: none;
+  outline: none;
+}
+
+.ald{
+  color: #3D3D3D;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.ald a {
+  color: #3D3D3D;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.ald a:hover {
+  text-decoration: underline;
+}
+
+
+.input1 button {
+  background-color:#3D3D3D;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 0;
+  margin-top: 20px;
+  margin-left: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 400px;
+  transition: background-color 0.3s;
+}
+
+.input1 button:hover {
+  background-color: hsl(0, 0%, 35%);
+}

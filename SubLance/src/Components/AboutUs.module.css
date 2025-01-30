@@ -1,10 +1,11 @@
 body{
   margin: 0;
+  background-color: #D9DFC6;
+}
+.wrapper{
   align-items: center;
   padding: 20px;
-  padding-bottom: 20px;
-  height: 100%;
-  background-color: #D9DFC6;
+  
 }
 .aboutus{
   display: flex;
@@ -15,7 +16,7 @@ body{
   background-color:#FFFDF0;
   border-radius: 20px;
 }
-h1{
+.HeadPara h1{
   display: flex;
   justify-content: flex-start;
   font-size: 40px;
@@ -59,7 +60,7 @@ h1{
   line-height: 1.5;
   color: black
 }
-h2{
+.SubPara h2{
   display: flex;
   justify-content: flex-start;
   color: black;
