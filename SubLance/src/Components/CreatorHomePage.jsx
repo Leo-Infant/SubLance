@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Styles from "./CreatorHomePage.module.css";
 import Logo from "../assets/Logo.png";
+import { AuthContext } from './context/AuthContext';
 
 const CreatorHomePage = () => {
   const postsPerPage = 10;
@@ -12,8 +13,10 @@ const CreatorHomePage = () => {
   const [modalData, setModalData] = useState({});
   const [linkError, setLinkError] = useState("");
   const [proposals, setProposals] = useState([]);
-  const [showProposals, setShowProposals] = useState(false); // Show/hide proposals modal
+  const [showProposals, setShowProposals] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null); // Track post for which proposals are fetched
+  const { token } = useContext(AuthContext);
+
   // http://localhost:8080/api/creator/unassignedpost
   // GET
   
@@ -21,11 +24,12 @@ const CreatorHomePage = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        const response = await fetch("http://localhost:8080/api/creator/unassignedpost", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-          }
+           "Authorization": `Bearer ${token}`,
+          },
         });
         if (!response.ok) throw new Error("Failed to fetch posts");
         const data = await response.json();
@@ -43,12 +47,18 @@ const CreatorHomePage = () => {
   const fetchProposals = async (postId) => {
     try {
       const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts"
-      ); // Replace with your API endpoint
+        "https://jsonplaceholder.typicode.com/posts" , {
+        method : "GET" , 
+        headers : {
+          "Content-Type": "application/json",
+           "Authorization": `Bearer ${token}`,
+        },
+        }
+      );
       if (!response.ok) throw new Error("Failed to fetch proposals");
       const data = await response.json();
-      setProposals(data); // Set proposals for the modal
-      setShowProposals(true); // Display proposals modal
+      setProposals(data);
+      setShowProposals(true);
     } catch (err) {
       alert("Failed to fetch proposals: " + err.message);
     }
@@ -89,7 +99,10 @@ const CreatorHomePage = () => {
         `https://jsonplaceholder.typicode.com/posts/${editingPost.id}`,
         {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json" ,
+            "Authorization": `Bearer ${token}`,
+          },
           body: JSON.stringify(updatedPost),
         }
       );
@@ -112,6 +125,10 @@ const CreatorHomePage = () => {
         `https://jsonplaceholder.typicode.com/posts/${editingPost.id}`,
         {
           method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+           "Authorization": `Bearer ${token}`,
+          },
         }
       );
 
@@ -138,7 +155,13 @@ const CreatorHomePage = () => {
     try {
       const response = await fetch(
         `https://jsonplaceholder.typicode.com/proposals/${proposalId}/accept`,
-        { method: "POST" }
+        { 
+          method: "POST" ,
+          headers: {
+            "Content-Type": "application/json",
+           "Authorization": `Bearer ${token}`,
+          },
+         }
       ); // Replace with your API endpoint
       if (!response.ok) throw new Error("Failed to accept proposal");
       alert("Proposal accepted!");
@@ -150,8 +173,14 @@ const CreatorHomePage = () => {
   const handleRejectProposal = async (proposalId) => {
     try {
       const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts"
-        // { method: "POST" }
+        "https://jsonplaceholder.typicode.com/posts" ,
+        { 
+          method: "POST" ,
+          headers: {
+            "Content-Type": "application/json",
+           "Authorization": `Bearer ${token}`,
+          },
+        }
       ); // Replace with your API endpoint
       if (!response.ok) throw new Error("Failed to reject proposal");
       alert("Proposal rejected!");

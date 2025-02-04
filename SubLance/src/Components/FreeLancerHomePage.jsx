@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Styles from "./FreeLancerHomePage.module.css";
 import Logo from "../assets/Logo.png";
+import { AuthContext } from "./context/AuthContext";
 
 const FreeLancerHomePage = () => {
   const postsPerPage = 10;
@@ -11,6 +12,7 @@ const FreeLancerHomePage = () => {
   const [showProposalForm, setShowProposalForm] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const [bid, setBiddingAmount] = useState("");
+  const{token} = useContext(AuthContext);
   // http://localhost:8080/api/freelancer/unassignedpost 
   // GET
 
@@ -21,11 +23,12 @@ const FreeLancerHomePage = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        const response = await fetch("http://localhost:8080/api/freelancer/unassignedpost", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-          }
+            "Authorization": `Bearer ${token}`,
+          },
         });
         if (!response.ok) throw new Error("Failed to fetch posts");
         const data = await response.json();
@@ -63,9 +66,12 @@ const FreeLancerHomePage = () => {
     try {
       // Send the proposed post to the backend
       const postId = selectedPost.id;
-      const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      const response = await fetch("http://localhost:8080/api/freelancer/propose", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+         "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({
           postId,
           bid,

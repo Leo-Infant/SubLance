@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Styles from './CreatePost.module.css';
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
+import { AuthContext } from './context/AuthContext';
 const CreatePost = () => {
+
   const navigate = useNavigate();
+  const{token} = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     postName: '',
     transcriptLanguage: '',
@@ -51,8 +54,9 @@ const [linkError, setLinkError] = useState("");
       const response = await fetch('http://localhost:8080/api/creator/createPost', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-        },
+            "Content-Type": "application/json",
+           "Authorization": `Bearer ${token}`,
+          },
         body: JSON.stringify(postData),
       });
   

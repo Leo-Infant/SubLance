@@ -34,7 +34,7 @@ const Registration = () => {
       return;
     }
 
-    // try {
+    try {
       console.log(dataWithoutConfirmPassword);
       const response = await fetch('http://localhost:8080/createUser', {
         method: 'POST',
@@ -42,16 +42,15 @@ const Registration = () => {
         body: JSON.stringify(dataWithoutConfirmPassword),
       });
       console.log("test");
-      //const data = await response.json();
       if (response.status===200) {
         navigate("/login");
       } else {
         alert(data.message || "Registration failed");
       }
-    //} catch (error) {
-    //   console.error("Error:", error);
-    //   alert("Something went wrong!");
-    // }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong!");
+    }
   };
 
   return (
