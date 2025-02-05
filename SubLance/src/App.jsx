@@ -6,6 +6,7 @@ import CreatorHomePage from "./Components/CreatorHomePage";
 import FreeLancerHomePage from "./Components/FreeLancerHomePage";
 import CreatePost from './Components/CreatePost';
 import CreatorAssigned from './Components/CreatorAssigned';
+import LogOut from './Components/LogOut';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         <Route path="/freelancerHome" element={<FreeLancerHomePage />} />
         <Route path="/createPost" element={<CreatePost />}/>
         <Route path="creatorAssigned" element={<CreatorAssigned/>} />
-        <Route path="/logout" element={<Navigate to="/login"/>}/>
+        <Route path="/logout" element={<LogOut/>}/>
       </Routes>
     </BrowserRouter>
     </AuthProvider>
