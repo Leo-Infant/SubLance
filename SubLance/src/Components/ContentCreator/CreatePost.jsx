@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import Styles from './CreatePost.module.css';
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from './context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 const CreatePost = () => {
 
   const navigate = useNavigate();

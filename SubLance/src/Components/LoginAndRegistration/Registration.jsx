@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Styles from "./Registration.module.css";
-import logo from "../assets/Logo.png";
-import usericon from "../assets/Logo.png";
-import emailicon from "../assets/Logo.png";
-import phoneicon from "../assets/Logo.png";
-import passicon from "../assets/Logo.png";
-import keyicon from "../assets/Logo.png";
+import logo from "../../assets/Logo.png";
+import usericon from "../../assets/Logo.png";
+import emailicon from "../../assets/Logo.png";
+import phoneicon from "../../assets/Logo.png";
+import passicon from "../../assets/Logo.png";
+import keyicon from "../../assets/Logo.png";
 
 const Registration = () => {
   const [formData, setFormData] = useState({

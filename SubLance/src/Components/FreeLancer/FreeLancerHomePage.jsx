@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Styles from "./FreeLancerHomePage.module.css";
-import Logo from "../assets/Logo.png";
-import { AuthContext } from "./context/AuthContext";
+import Logo from "../../assets/Logo.png";
+import { AuthContext } from "../context/AuthContext";
 
 const FreeLancerHomePage = () => {
   const postsPerPage = 10;
