@@ -7,6 +7,7 @@ import FreeLancerHomePage from "./Components/FreeLancer/FreeLancerHomePage";
 import CreatePost from './Components/ContentCreator/CreatePost';
 import CreatorAssigned from './Components/ContentCreator/CreatorAssigned';
 import LogOut from './Components/LoginAndRegistration/LogOut';
+import  FreeLancerProposals from './Components/FreeLancer/FreeLancerProposals';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/createPost" element={<CreatePost />}/>
           <Route path="creatorAssigned" element={<CreatorAssigned/>} />
           <Route path="/logout" element={<LogOut/>}/>
+          <Route path="/freeLancerProposals" element={<FreeLancerProposals/>}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

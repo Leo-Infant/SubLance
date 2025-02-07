@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import Styles from "./FreeLancerHomePage.module.css";
 import Logo from "../../assets/Logo.png";
 import { AuthContext } from "../context/AuthContext";
@@ -23,7 +23,7 @@ const FreeLancerHomePage = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:8080/api/freelancer/unassignedpost", {
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -63,8 +63,8 @@ const FreeLancerHomePage = () => {
   };
 
   const handleApply = async () => {
+    e.preventDefault();
     try {
-      // Send the proposed post to the backend
       const postId = selectedPost.id;
       const response = await fetch("http://localhost:8080/api/freelancer/propose", {
         method: "POST",
@@ -78,12 +78,10 @@ const FreeLancerHomePage = () => {
         }),
       });
       if (!response.ok) throw new Error("Failed to send proposal");
-
-      // Remove the proposed post from the homepage
       setPosts(posts.filter((post) => post.id !== selectedPost.id));
-      setShowProposalForm(false); // Close the form
-      setSelectedPost(null); // Reset selected post
-      setBiddingAmount(""); // Clear the bidding amount field
+      setShowProposalForm(false); 
+      setSelectedPost(null);
+      setBiddingAmount("");
       console.log("DONE")
     } catch (err) {
       console.error(err.message);
@@ -94,6 +92,19 @@ const FreeLancerHomePage = () => {
     setSelectedPost(null);
     setBiddingAmount("");
   };
+  const extractYouTubeId = (url) => {
+    if (!url || typeof url !== 'string') {
+      console.error("Invalid URL:", url);
+      return null;
+    }
+    const regExp = /(?:youtu\.be\/|youtube\.com\/(?:.*[?&]v=|embed\/|v\/))([^"&?/ ]{11})/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
+  };
+  
+  const sampleLink = "https://www.youtube.com/watch?v=AIqG6Gnvm90&list=RDmKQkoiNMR4c&index=3";
+  console.log(extractYouTubeId(sampleLink));
+
   return (
     <div className={Styles.homepage}>
       <div className={Styles.header}>
@@ -102,10 +113,10 @@ const FreeLancerHomePage = () => {
           SubLance
         </div>
         <div className={Styles.navLinks}>
-          <a href="/create-post" className={Styles.navLink}>
+          <a href="/assinged" className={Styles.navLink}>
             ASSIGNED
           </a>
-          <a href="/proposals.jsx" className={Styles.navLink}>
+          <a href="/freeLancerProposals" className={Styles.navLink}>
             PROPOSAL
           </a>
           <a href="/logout" className={Styles.navLink}>
@@ -120,35 +131,49 @@ const FreeLancerHomePage = () => {
       ) : (
         <>
           <div className={Styles.postsContainer}>
-            {currentPosts.map((post) => (
-              <div key={post.id} className={Styles.postCard}>
-                <p>
-                  <strong>POST NAME:</strong> {post.name}
-                </p>
-                <p>
-                  <strong>TRANSCRIPT LANGUAGE:</strong>{" "}
-                  {post.transcriptLanguage}
-                </p>
-                <p>
-                  <strong>AUDIO LANGUAGE:</strong> {post.audioLanguage}
-                </p>
-                <p>
-                  <strong>DEADLINE:</strong> {post.deadline}
-                </p>
-                <p>
-                  <strong>YOUTUBE LINK:</strong> {post.youtubeLink}
-                </p>
-                <div className={Styles.buttons}>
-                  <button
-                    className={Styles.proposalsButton}
-                    onClick={() => handleProposeClick(post)}
-                  >
-                    PROPOSE
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+  {currentPosts.map((post) => (
+    <div key={post.id} className={Styles.postCard}>
+      <div
+        className={Styles.videoContainer}
+        onContextMenu={(e) => e.preventDefault()}
+      >
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${extractYouTubeId(sampleLink)}?autoplay=0&rel=0`}
+          title="YouTube Video"
+          allow="picture-in-picture"
+          allowFullScreen
+          className={Styles.videoIframe}
+        />
+      </div>
+
+      {/* Post Details Section */}
+      <div className={Styles.postCardDetails}>
+        <p>
+          <strong>POST NAME:</strong> {post.name}
+        </p>
+        <p>
+          <strong>TRANSCRIPT LANGUAGE:</strong> {post.transcriptLanguage}
+        </p>
+        <p>
+          <strong>AUDIO LANGUAGE:</strong> {post.audioLanguage}
+        </p>
+        <p>
+          <strong>DEADLINE:</strong> {post.deadline}
+        </p>
+
+        <div className={Styles.buttons}>
+          <button
+            className={Styles.proposalsButton}
+            onClick={() => handleProposeClick(post)}
+          >
+            PROPOSE
+          </button>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
 
           {posts.length > postsPerPage && (
             <div className={Styles.pagination}>
@@ -182,7 +207,7 @@ const FreeLancerHomePage = () => {
           <input
             type="text"
             placeholder="Bidding Amount"
-            value={biddingAmount}
+            value={bid}
             onChange={(e) => setBiddingAmount(e.target.value)}
           />
           <div className={Styles.formButtons}>
