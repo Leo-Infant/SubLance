@@ -4,13 +4,28 @@ import styles from "./FreeLancerProposals.module.css";
 import { useNavigate } from "react-router-dom";
 
 const FreeLancerProposals = () => {
+  const postsPerPage = 10;
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 10;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
 const navigate = useNavigate();
+
+
+const handleNext = () => {
+  if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+};
+
+const handlePrevious = () => {
+  if (currentPage > 1) setCurrentPage(currentPage - 1);
+};
+
+
+const startIndex = (currentPage - 1) * postsPerPage;
+const endIndex = startIndex + postsPerPage;
+const showPosts = posts.slice(startIndex, endIndex);
+const totalPages = Math.ceil(posts.length / postsPerPage);
 
 useEffect(() => { 
     const fetchPosts = async () => {
@@ -18,10 +33,10 @@ useEffect(() => {
         setLoading(true);
         const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          //  "Authorization": `Bearer ${token}`,
-          },
+          // headers: {
+          //   "Content-Type": "application/json",
+          // //  "Authorization": `Bearer ${token}`,
+          // },
         });
         if (!response.ok) throw new Error("Failed to fetch posts");
         const data = await response.json();
@@ -38,21 +53,7 @@ useEffect(() => {
 
 const handleBackButton = () =>{
   navigate(-1);
-
-const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
-
-const handlePrevious = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const currentPosts = posts.slice(startIndex, endIndex);
-
-  const totalPages = Math.ceil(posts.length / postsPerPage);
+  
 };
   return(
     <div className={styles.pageContainer}>
@@ -71,7 +72,7 @@ const handlePrevious = () => {
               ) : (
                 <>
                   <div className={styles.postsContainer}>
-                    {currentPosts.map((post) => (
+                    { showPosts.map((post) => (
                       <div key={post.id} className={styles.postCard}>
                         <p>
                           <strong>POST NAME:</strong> {post.name}
@@ -89,13 +90,12 @@ const handlePrevious = () => {
                         <p>
                           <strong>YOUTUBE LINK :</strong> {post.youtubeLink}
                         </p>
-                        <div className={styles.buttons}>
+                        {/* <div className={styles.buttons}>
                           
-                        </div>
+                        </div> */}
                       </div>
                     ))}
                   </div>
-        
                   {posts.length > postsPerPage && (
                     <div className={styles.pagination}>
                       <a
@@ -110,7 +110,6 @@ const handlePrevious = () => {
                       <span className={styles.pageInfo}>
                         Page {currentPage} of {totalPages}
                       </span>
-        
                       <a
                         className={`${styles.paginationButton} ${
                           currentPage === totalPages ? styles.disabled : ""
