@@ -1,0 +1,160 @@
+.inputFormContainer {
+    width: 100%;
+    height: 100%;
+  }
+  .captionContainer {
+    padding: 8px;
+    padding-top: 10px;
+    background-color: #1e293b;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding-bottom: 16px;
+  }
+  
+  .captionTitle {
+    font-size: 1.125rem;
+    color: white;
+    margin: 0px;
+    margin-left: 7px;
+  }
+  
+  .timeInputs {
+    display: flex ;
+    justify-content: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+  
+  .iconButton {
+    border-radius: 50%;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+  }
+  
+  .iconImage {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  .rotate {
+    transform: rotate(180deg);
+  }
+  
+  .sendButton {
+    border-radius: 50%;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    background: #fafafa;
+  }
+  
+  .sendButtonActive {
+    background: #d1d5db;
+  }
+  
+  .sendButtonActive:hover {
+    background: #9ca3af;
+  }
+  
+  .rotateSend {
+    transform: rotate(-45deg);
+  }
+  
+  .showCaptionsButton {
+    display: none;
+    margin-top: 16px;
+  }
+  
+  .inputContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .inputWrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #ccc;
+    border-radius: 50px; /* Full radius like NextUI */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .inputField {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 50px;
+    background: transparent;
+  }
+  
+  .iconButton,
+  .sendButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .iconImage {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  .rotate {
+    transform: rotate(180deg);
+  }
+  
+  .sendButtonActive {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .sendButton:not(.sendButtonActive) {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .rotateSend {
+    transform: rotate(360deg);
+  }
+  .timeButton{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .timebutton input{
+    border-radius: 30px;
+    padding: 5px;
+  }
+  .startEnd{
+    padding: 10px 15px;
+    border-radius: 50px;
+    border: none;
+  }
+  .timeButton p{
+    margin-left: 5px;
+  }
+  .videoContainer :global(iframe){
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 10px !important;
+  }

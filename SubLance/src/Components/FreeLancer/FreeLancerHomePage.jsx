@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext} from "react";
 import Styles from "./FreeLancerHomePage.module.css";
 import Logo from "../../assets/Logo.png";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const FreeLancerHomePage = () => {
   const postsPerPage = 10;
@@ -102,8 +102,7 @@ const FreeLancerHomePage = () => {
     return match ? match[1] : null;
   };
   
-  const sampleLink = "https://www.youtube.com/watch?v=AIqG6Gnvm90&list=RDmKQkoiNMR4c&index=3";
-  console.log(extractYouTubeId(sampleLink));
+  const sampleLink = "https://www.youtube.com/watch?v=-XLsQwM-QiQ";
 
   return (
     <div className={Styles.homepage}>
@@ -113,7 +112,7 @@ const FreeLancerHomePage = () => {
           SubLance
         </div>
         <div className={Styles.navLinks}>
-          <a href="/assinged" className={Styles.navLink}>
+          <a href="/freeLancerAssigned" className={Styles.navLink}>
             ASSIGNED
           </a>
           <a href="/freeLancerProposals" className={Styles.navLink}>

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Styles from "./Registration.module.css";
 import logo from "../../assets/Logo.png";
-import usericon from "../../assets/Logo.png";
-import emailicon from "../../assets/Logo.png";
-import phoneicon from "../../assets/Logo.png";
-import passicon from "../../assets/Logo.png";
-import keyicon from "../../assets/Logo.png";
+import { FaLock } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import { IoIosLock } from "react-icons/io";
+import { FaUserCircle } from "react-icons/fa";
+import { FaPhoneFlip } from "react-icons/fa6";
+
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -72,7 +73,7 @@ const Registration = () => {
                 onChange={handleChange}
                 required
               />
-              <img src={usericon} alt="" />
+              < FaUserCircle className={Styles.icon} />
 
               <input
                 type="email"
@@ -82,7 +83,7 @@ const Registration = () => {
                 onChange={handleChange}
                 required
               />
-              <img src={emailicon} alt="" />
+              < MdEmail className={Styles.icon} />
 
               <input
                 type="tel"
@@ -92,7 +93,7 @@ const Registration = () => {
                 onChange={handleChange}
                 required
               />
-              <img src={phoneicon} alt="" />
+              <FaPhoneFlip className={Styles.icon} />
 
               <input
                 type="password"
@@ -102,7 +103,7 @@ const Registration = () => {
                 onChange={handleChange}
                 required
               />
-              <img src={passicon} alt="" />
+             <FaLock className={Styles.icon} />
 
               <input
                 type="password"
@@ -112,7 +113,7 @@ const Registration = () => {
                 onChange={handleChange}
                 required
               />
-              <img src={keyicon} alt="" />
+               <FaLock className={Styles.icon} />
 
               <select name="role" value={formData.role} onChange={handleChange} required>
                 <option value="" disabled>

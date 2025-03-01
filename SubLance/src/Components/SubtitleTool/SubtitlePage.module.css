@@ -1,0 +1,46 @@
+.appContainer {
+    max-width: 1500px;
+    padding-bottom: 1rem;
+    margin: 0 auto;
+    color: white;
+  }
+  
+  .appTitle {
+    font-size: 30px ; /* Equivalent to text-2xl */
+    font-weight: 600; /* Equivalent to font-semibold */
+    color: black;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    padding : 5px;
+  }
+  
+  
+  .tabsContainer {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .tabButton {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 999px;
+    border: none;
+    background-color: #3D3D3D;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .tabButton:hover {
+    background-color: hsl(0, 0%, 35%);;
+  }
+  
+  .tabButton.active {
+    background-color: #0070f3;
+  }
+  
+  

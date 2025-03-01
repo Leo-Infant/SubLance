@@ -1,8 +1,11 @@
 
-  .pageContainer {
+.homepage {
     font-family: Arial, sans-serif;
+    background-color: #D9DFC6;
+    padding: 0;
+    margin: 0;
+
   }
-  
   .header {
     position: relative;
     display: flex;
@@ -12,10 +15,9 @@
     background-color: #FFFDF0;
     border-top: 1px solid #e0e0e0;
   }
-  
   .backButton {
     position: absolute;
-    left: 0; /* Align the back button to the left */
+    left: 0;
     cursor: pointer;
     display: inline-flex;
     background-color: transparent;
@@ -31,12 +33,6 @@
   .backButton svg{
     display: block;
   }
-  .headerTitle {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
   .headerTitle {
     font-size: 24px;
     font-weight: bold;
@@ -73,6 +69,28 @@
     font-size: 18px;
     color: #3D3D3D;
   }
+  
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .editButton,
+  .proposalsButton {
+    background-color: #3D3D3D;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .editButton:hover,
+  .proposalsButton:hover {
+    background-color:  hsl(0, 0%, 35%);
+  }
+  
   .pagination {
     display: flex;
     align-items: center;
@@ -107,3 +125,82 @@
     font-size: 14px; 
     user-select: none;
   }
+  
+  .proposalButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+}
+
+
+.modalContainer {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 1001; 
+}
+
+
+.modalContainer h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+
+.modalContainer input[type="file"] {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.buttonContainer {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.uploadButton{
+  background: #3D3D3D;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.uploadButton:hover{
+  background: hsl(0, 0%, 35%);
+}
+.cancelButton{
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.cancelButton:hover{
+  background: #c9302c;
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect , useContext } from "react";
 import Styles from "./CreatorHomePage.module.css";
 import Logo from "../../assets/Logo.png";
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 const CreatorHomePage = () => {
   const postsPerPage = 10;
@@ -24,7 +24,7 @@ const CreatorHomePage = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:8080/api/creator/unassignedpost", {
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -72,8 +72,9 @@ const CreatorHomePage = () => {
   };
 
   const handleEditPost = (post) => {
-    setEditingPost(post); // Show modal for the selected post
-    setModalData({ ...post }); // Pre-fill modal data
+    setEditingPost(post); 
+    
+    
   };
 
   const handleInputChange = (e) => {
@@ -162,7 +163,7 @@ const CreatorHomePage = () => {
            "Authorization": `Bearer ${token}`,
           },
          }
-      ); // Replace with your API endpoint
+      ); 
       if (!response.ok) throw new Error("Failed to accept proposal");
       alert("Proposal accepted!");
       setProposals(proposals.filter((proposal) => proposal.id !== proposalId)); // Remove the accepted proposal from the UI
