@@ -1,7 +1,6 @@
-import React, { useState, useEffect , useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Styles from "./CreatorHomePage.module.css";
-import Logo from "../../assets/Logo.png";
-import { AuthContext } from '../../context/AuthContext';
+import Logo from "../assets/Logo.png";
 
 const CreatorHomePage = () => {
   const postsPerPage = 10;
@@ -13,10 +12,8 @@ const CreatorHomePage = () => {
   const [modalData, setModalData] = useState({});
   const [linkError, setLinkError] = useState("");
   const [proposals, setProposals] = useState([]);
-  const [showProposals, setShowProposals] = useState(false);
+  const [showProposals, setShowProposals] = useState(false); // Show/hide proposals modal
   const [selectedPost, setSelectedPost] = useState(null); // Track post for which proposals are fetched
-  const { token } = useContext(AuthContext);
-
   // http://localhost:8080/api/creator/unassignedpost
   // GET
   
@@ -24,20 +21,16 @@ const CreatorHomePage = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:8080/api/creator/unassignedposts", {
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-           "Authorization": `Bearer ${token}`,
-          },
+          }
         });
         if (!response.ok) throw new Error("Failed to fetch posts");
         const data = await response.json();
         setPosts(data);
         setLoading(false);
-        console.log(data.videoUrl);
-        console.log(data.audioLang);
-        console.log(data.transcriptionLang);
       } catch (err) {
         setError(err.message);
         setLoading(false);
@@ -50,18 +43,12 @@ const CreatorHomePage = () => {
   const fetchProposals = async (postId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/creator/proposal/${postId}` , {
-        method : "GET" , 
-        headers : {
-          "Content-Type": "application/json",
-           "Authorization": `Bearer ${token}`,
-        },
-        }
-      );
+        "https://jsonplaceholder.typicode.com/posts"
+      ); // Replace with your API endpoint
       if (!response.ok) throw new Error("Failed to fetch proposals");
       const data = await response.json();
-      setProposals(data);
-      setShowProposals(true);
+      setProposals(data); // Set proposals for the modal
+      setShowProposals(true); // Display proposals modal
     } catch (err) {
       alert("Failed to fetch proposals: " + err.message);
     }
@@ -75,15 +62,14 @@ const CreatorHomePage = () => {
   };
 
   const handleEditPost = (post) => {
-    setEditingPost(post); 
-    
-    
+    setEditingPost(post); // Show modal for the selected post
+    setModalData({ ...post }); // Pre-fill modal data
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setModalData({ ...modalData, [name]: value });
-    if (name === "videoUrl") {
+    if (name === "youtubeLink") {
       if (!urlRegex.test(value)) {
         setLinkError("Please enter a valid YouTube URL.");
       } else {
@@ -93,7 +79,7 @@ const CreatorHomePage = () => {
   };
 
   const handleConfirmEdit = async () => {
-    if (!urlRegex.test(modalData.videoUrl)) {
+    if (!urlRegex.test(modalData.youtubeLink)) {
       alert("Please enter a valid YouTube URL.");
       return;
     }
@@ -103,10 +89,7 @@ const CreatorHomePage = () => {
         `https://jsonplaceholder.typicode.com/posts/${editingPost.id}`,
         {
           method: "PUT",
-          headers: { 
-            "Content-Type": "application/json" ,
-            "Authorization": `Bearer ${token}`,
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(updatedPost),
         }
       );
@@ -129,10 +112,6 @@ const CreatorHomePage = () => {
         `https://jsonplaceholder.typicode.com/posts/${editingPost.id}`,
         {
           method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-           "Authorization": `Bearer ${token}`,
-          },
         }
       );
 
@@ -158,15 +137,9 @@ const CreatorHomePage = () => {
   const handleAcceptProposal = async (proposalId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/creator/proposal/accept/${proposalId}`,
-        { 
-          method: "GET" ,
-          headers: {
-            "Content-Type": "application/json",
-           "Authorization": `Bearer ${token}`,
-          },
-         }
-      ); 
+        `https://jsonplaceholder.typicode.com/proposals/${proposalId}/accept`,
+        { method: "POST" }
+      ); // Replace with your API endpoint
       if (!response.ok) throw new Error("Failed to accept proposal");
       alert("Proposal accepted!");
       setProposals(proposals.filter((proposal) => proposal.id !== proposalId)); // Remove the accepted proposal from the UI
@@ -177,14 +150,8 @@ const CreatorHomePage = () => {
   const handleRejectProposal = async (proposalId) => {
     try {
       const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts" ,
-        { 
-          method: "POST" ,
-          headers: {
-            "Content-Type": "application/json",
-           "Authorization": `Bearer ${token}`,
-          },
-        }
+        "https://jsonplaceholder.typicode.com/posts"
+        // { method: "POST" }
       ); // Replace with your API endpoint
       if (!response.ok) throw new Error("Failed to reject proposal");
       alert("Proposal rejected!");
@@ -242,16 +209,16 @@ const CreatorHomePage = () => {
                 </p>
                 <p>
                   <strong>TRANSCRIPT LANGUAGE:</strong>{" "}
-                  {post.transcriptionLang}
+                  {post.transcriptLanguage}
                 </p>
                 <p>
-                  <strong>AUDIO LANGUAGE:</strong> {post.audioLang}
+                  <strong>AUDIO LANGUAGE:</strong> {post.audioLanguage}
                 </p>
                 <p>
                   <strong>DEADLINE:</strong> {post.deadline}
                 </p>
                 <p>
-                  <strong>YOUTUBE LINK :</strong> {post.videoUrl}
+                  <strong>YOUTUBE LINK :</strong> {post.youtubeLink}
                 </p>
                 <div className={Styles.buttons}>
                   <button
@@ -316,8 +283,8 @@ const CreatorHomePage = () => {
               Transcript Language:
               <input
                 type="text"
-                name="transcriptionLang"
-                value={modalData.transcriptionLang || ""}
+                name="transcriptLanguage"
+                value={modalData.transcriptLanguage || ""}
                 onChange={handleInputChange}
               />
             </label>
@@ -325,8 +292,8 @@ const CreatorHomePage = () => {
               Audio Language:
               <input
                 type="text"
-                name="audioLang"
-                value={modalData.audioLang || ""}
+                name="audioLanguage"
+                value={modalData.audioLanguage || ""}
                 onChange={handleInputChange}
               />
             </label>
@@ -344,8 +311,8 @@ const CreatorHomePage = () => {
               YouTube Link:
               <input
                 type="url"
-                name="videoUrl"
-                value={modalData.videoUrl || ""}
+                name="youtubeLink"
+                value={modalData.youtubeLink || ""}
                 onChange={handleInputChange}
               />
               {linkError && <p className={Styles.errorText}>{linkError}</p>}
@@ -384,17 +351,17 @@ const CreatorHomePage = () => {
                 {proposals.map((proposal) => (
                   <div key={proposal.id} className={Styles.proposalCard}>
                     <p>
-                      <strong>Name:</strong> {proposal.freelancer.name}
+                      <strong>Name:</strong> {proposal.userName}
                     </p>
                     <p>
-                      <strong>Ratings:</strong> {proposal.freelancer.rating}
+                      <strong>Ratings:</strong> {proposal.ratings}
                     </p>
                     <p>
-                      <strong>Bidding Amount:</strong> {proposal.bid}
+                      <strong>Bidding Amount:</strong> {proposal.biddingAmount}
                     </p>
                     <p>
                       <strong>Total Work Completed:</strong>{" "}
-                      {proposal.freelancer.totalWork}
+                      {proposal.totalWorkCompleted}
                     </p>
                     <div className={Styles.proposalButtons}>
                       <button

@@ -23,7 +23,7 @@ const FreeLancerHomePage = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        const response = await fetch("http://localhost:8080/api/freelancer/unassignedposts", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -62,7 +62,7 @@ const FreeLancerHomePage = () => {
     setShowProposalForm(true);
   };
 
-  const handleApply = async () => {
+  const handleApply = async (e) => {
     e.preventDefault();
     try {
       const postId = selectedPost.id;
@@ -82,7 +82,8 @@ const FreeLancerHomePage = () => {
       setShowProposalForm(false); 
       setSelectedPost(null);
       setBiddingAmount("");
-      console.log("DONE")
+      console.log("DONE");
+      console.log(posts[0].id);
     } catch (err) {
       console.error(err.message);
     }
@@ -102,7 +103,6 @@ const FreeLancerHomePage = () => {
     return match ? match[1] : null;
   };
   
-  const sampleLink = "https://www.youtube.com/watch?v=-XLsQwM-QiQ";
 
   return (
     <div className={Styles.homepage}>
@@ -137,7 +137,7 @@ const FreeLancerHomePage = () => {
         onContextMenu={(e) => e.preventDefault()}
       >
         <iframe
-          src={`https://www.youtube-nocookie.com/embed/${extractYouTubeId(sampleLink)}?autoplay=0&rel=0`}
+          src={`https://www.youtube-nocookie.com/embed/${extractYouTubeId(post.videoUrl)}?autoplay=0&rel=0`}
           title="YouTube Video"
           allow="picture-in-picture"
           allowFullScreen
@@ -151,10 +151,10 @@ const FreeLancerHomePage = () => {
           <strong>POST NAME:</strong> {post.name}
         </p>
         <p>
-          <strong>TRANSCRIPT LANGUAGE:</strong> {post.transcriptLanguage}
+          <strong>TRANSCRIPT LANGUAGE:</strong> {post.transcriptionLang}
         </p>
         <p>
-          <strong>AUDIO LANGUAGE:</strong> {post.audioLanguage}
+          <strong>AUDIO LANGUAGE:</strong> {post.audioLang}
         </p>
         <p>
           <strong>DEADLINE:</strong> {post.deadline}

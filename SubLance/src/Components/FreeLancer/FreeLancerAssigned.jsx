@@ -23,7 +23,7 @@ const FreeLancerAssigned = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        const response = await fetch("http://localhost:8080/api/freelancer/assignedposts", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -52,14 +52,14 @@ const FreeLancerAssigned = () => {
   };
 
   const handleStartWork = (post) => {
-    navigate('/subtitleTool', { state: { youtubeLink: "https://www.youtube.com/watch?v=-XLsQwM-QiQ" } });
+    navigate('/subtitleTool', { state: { youtubeLink: post.videoUrl } });
   };
   const handleUploadClick = (postId) => {
     setUploadModal(postId);
     console.log('ButtonClicked' , postId);
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (postId) => {
     if (!selectedFile) {
       toast.warn("Please select a file!");
       return;
@@ -77,6 +77,18 @@ const FreeLancerAssigned = () => {
         }
       );
         const data = await response.json();
+        console.log(data);
+        const send = await fetch(
+          `http://localhost:8080/api/freelancer/update/${postId}`,
+          {
+            method: "POST",
+            body: data.url,
+            headers:{
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
+            }
+          }
+          );
         console.log("Cloudinary Response:", data);
 
       
@@ -94,7 +106,7 @@ const FreeLancerAssigned = () => {
       toast.error("Upload failed!");
     }
   };
-
+  
   const handleBackButton = () =>{
     navigate(-1);
   };
@@ -129,16 +141,16 @@ const FreeLancerAssigned = () => {
                 </p>
                 <p>
                   <strong>TRANSCRIPT LANGUAGE:</strong>{" "}
-                  {post.transcriptLanguage}
+                  {post.transcriptionLang}
                 </p>
                 <p>
-                  <strong>AUDIO LANGUAGE:</strong> {post.audioLanguage}
+                  <strong>AUDIO LANGUAGE:</strong> {post.audioLang}
                 </p>
                 <p>
                   <strong>DEADLINE:</strong> {post.deadline}
                 </p>
                 <p>
-                  <strong>YOUTUBE LINK :</strong> {post.youtubeLink}
+                  <strong>YOUTUBE LINK :</strong> {post.videoUrl}
                 </p>
                 <div className={Styles.buttons}>
                   <button
@@ -192,7 +204,7 @@ const FreeLancerAssigned = () => {
                 onChange={(e) => setSelectedFile(e.target.files[0])} 
             />
             <div className={Styles.buttonContainer}>
-                <button onClick={handleUpload} className={Styles.uploadButton}>Upload</button>
+                <button onClick={handleUpload(uploadModal)} className={Styles.uploadButton}>Upload</button>
                 <button onClick={() => setUploadModal(null)} className={Styles.cancelButton}>Cancel</button>
             </div>
           </div>

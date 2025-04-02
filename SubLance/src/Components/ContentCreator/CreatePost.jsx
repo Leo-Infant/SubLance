@@ -9,18 +9,18 @@ const CreatePost = () => {
   const{token} = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
-    postName: '',
-    transcriptLanguage: '',
-    audioLanguage: '',
+    name: '',
+    transcriptionLang: '',
+    audioLang: '',
     deadline: '',
-    youTubeLink: '',
+    videoUrl: '',
   });
 const [linkError, setLinkError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    if (name === "youTubeLink") {
+    if (name === "videoUrl") {
       if (!urlRegex.test(value)) {
         setLinkError("Please enter a valid YouTube URL.");
       } else {
@@ -31,27 +31,28 @@ const [linkError, setLinkError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { postName, transcriptLanguage, audioLanguage, deadline, youTubeLink } = formData;
+    const { name, transcriptionLang, audioLang, deadline, videoUrl } = formData;
   
-    if (!postName || !transcriptLanguage || !audioLanguage || !deadline || !youTubeLink) {
+    if (!name || !transcriptionLang || !audioLang || !deadline || !videoUrl) {
       alert("All fields are required.");
       return;
     }
-    if (!urlRegex.test(youTubeLink)) {
+    if (!urlRegex.test(videoUrl)) {
       alert("Please enter a valid YouTube URL.");
       return;
     }
   
     const postData = {
-      postName,
-      transcriptLanguage,
-      audioLanguage,
+      name,
+      transcriptionLang,
+      audioLang,
       deadline,
-      youTubeLink
+      videoUrl
     };
   
     try {
-      const response = await fetch('http://localhost:8080/api/creator/createPost', {
+      
+      const response = await fetch('http://localhost:8080/api/creator/createpost', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -59,39 +60,40 @@ const [linkError, setLinkError] = useState("");
           },
         body: JSON.stringify(postData),
       });
-  
       if (response.ok) {
-        const result = await response.json();
-        console.log('Post created:', result);
+        
         alert('Post Created Successfully');
         setFormData({
-          postName: '',
-          transcriptLanguage: '',
-          audioLanguage: '',
+          name: '',
+          transcriptionLang: '',
+          audioLang: '',
           deadline: '',
-          youTubeLink: '',
+          videoUrl: '',
         });
       } else {
         alert('Failed to create post. Please try again.');
         setFormData({
-          postName: '',
-          transcriptLanguage: '',
-          audioLanguage: '',
+          name: '',
+          transcriptionLang: '',
+          audioLang: '',
           deadline: '',
-          youTubeLink: '',
+          videoUrl: '',
         });
+      
       }
     } catch (error) {
       console.error('Error creating post:', error);
       alert('An error occurred while creating the post.');
       setFormData({
-        postName: '',
-        transcriptLanguage: '',
-        audioLanguage: '',
+        name: '',
+        transcriptionLang: '',
+        audioLang: '',
         deadline: '',
-        youTubeLink: '',
+        videoUrl: '',
       });
 
+    }finally{
+      navigate('/creatorHome');
     }
   };
 
@@ -117,9 +119,9 @@ const [linkError, setLinkError] = useState("");
               Post Name:
               <input
                 type="text"
-                name="postName"
+                name="name"
                 className={Styles.inputBox}
-                value={formData.postName}
+                value={formData.name}
                 onChange={handleChange}
               />
             </label>
@@ -127,9 +129,9 @@ const [linkError, setLinkError] = useState("");
               Transcript Language:
               <input
                 type="text"
-                name="transcriptLanguage"
+                name="transcriptionLang"
                 className={Styles.inputBox}
-                value={formData.transcriptLanguage}
+                value={formData.transcriptionLang}
                 onChange={handleChange}
               />
             </label>
@@ -137,9 +139,9 @@ const [linkError, setLinkError] = useState("");
               Audio Language:
               <input
                 type="text"
-                name="audioLanguage"
+                name="audioLang"
                 className={Styles.inputBox}
-                value={formData.audioLanguage}
+                value={formData.audioLang}
                 onChange={handleChange}
               />
             </label>
@@ -158,7 +160,7 @@ const [linkError, setLinkError] = useState("");
               YouTube Link:
               <input
                 type="test"
-                name="youTubeLink"
+                name="videoUrl"
                 className={Styles.inputBox}
                 value={formData.compensation}
                 onChange={handleChange}
@@ -173,11 +175,11 @@ const [linkError, setLinkError] = useState("");
 
         <div className={Styles.formRight}>
           <div className={Styles.formSection}>
-            <p><strong>Post Name:</strong> {formData.postName}</p>
-            <p><strong>Transcript Language:</strong> {formData.transcriptLanguage}</p>
-            <p><strong>Audio Language:</strong> {formData.audioLanguage}</p>
+            <p><strong>Post Name:</strong> {formData.name}</p>
+            <p><strong>Transcript Language:</strong> {formData.transcriptionLang}</p>
+            <p><strong>Audio Language:</strong> {formData.audioLang}</p>
             <p><strong>Deadline:</strong> {formData.deadline}</p>
-            <p><strong>YouTube Link:</strong> {formData.youTubeLink}</p>
+            <p><strong>YouTube Link:</strong> {formData.videoUrl}</p>
           </div>
         </div>
       </form>

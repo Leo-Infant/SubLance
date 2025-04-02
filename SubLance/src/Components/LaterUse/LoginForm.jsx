@@ -1,11 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from '../../context/AuthContext';
-import Logo from '../../assets/Logo.png';
+import { AuthContext } from './context/AuthContext';
+import Logo from '../assets/Logo.png';
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import StylesLogin from './LoginForm.module.css';
-
 // http://localhost:8080/token
 // POST
 
@@ -23,9 +22,7 @@ function Login() {
     try {
       const response = await fetch('http://localhost:8080/token', { 
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json'
-         },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
@@ -40,7 +37,7 @@ function Login() {
 
       localStorage.setItem("authToken", token);
       setToken(token);
-      console.log(userRole);
+
       userRole === "ROLE_CREATOR" ? navigate('/creatorHome') : navigate('/freelancerHome');
 
       setEmail("");

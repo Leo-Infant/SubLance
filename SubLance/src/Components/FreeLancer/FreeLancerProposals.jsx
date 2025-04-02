@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import styles from "./FreeLancerProposals.module.css";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../../context/AuthContext';
 
 const FreeLancerProposals = () => {
   const postsPerPage = 10;
@@ -9,7 +10,7 @@ const FreeLancerProposals = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const {token} = useContext(AuthContext);
 const navigate = useNavigate();
 
 
@@ -31,12 +32,12 @@ useEffect(() => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        const response = await fetch("http://localhost:8080/api/freelancer/proposed", {
           method: "GET",
-          // headers: {
-          //   "Content-Type": "application/json",
-          // //  "Authorization": `Bearer ${token}`,
-          // },
+          headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+          },
         });
         if (!response.ok) throw new Error("Failed to fetch posts");
         const data = await response.json();
@@ -79,16 +80,16 @@ const handleBackButton = () =>{
                         </p>
                         <p>
                           <strong>TRANSCRIPT LANGUAGE:</strong>{" "}
-                          {post.transcriptLanguage}
+                          {post.transcriptionLang}
                         </p>
                         <p>
-                          <strong>AUDIO LANGUAGE:</strong> {post.audioLanguage}
+                          <strong>AUDIO LANGUAGE:</strong> {post.audioLang}
                         </p>
                         <p>
                           <strong>DEADLINE:</strong> {post.deadline}
                         </p>
                         <p>
-                          <strong>YOUTUBE LINK :</strong> {post.youtubeLink}
+                          <strong>YOUTUBE LINK :</strong> {post.videoUrl}
                         </p>
                         {/* <div className={styles.buttons}>
                           

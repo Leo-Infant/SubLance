@@ -9,7 +9,7 @@ const useHandleLogOut = () => {
     const logOut = () => {
         localStorage.removeItem("authToken");
         setToken(null); 
-        navigate("/login");
+        navigate("/homePage");
     };
 
     return logOut;

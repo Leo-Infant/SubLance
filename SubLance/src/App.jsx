@@ -27,7 +27,7 @@ function App() {
           <Route path="/creatorHome" element={<CreatorHomePage />} />
           <Route path="/freelancerHome" element={<FreeLancerHomePage />} />
           <Route path="/createPost" element={<CreatePost />}/>
-          <Route path="creatorAssigned" element={<CreatorAssigned/>} />
+          <Route path="/creatorAssigned" element={<CreatorAssigned/>} />
           <Route path="/logout" element={<LogOut/>}/>
           <Route path="/freeLancerProposals" element={<FreeLancerProposals/>}/>
           <Route path="/subtitleTool" element={<SubtitleTool />}/>

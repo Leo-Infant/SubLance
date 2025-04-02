@@ -119,8 +119,8 @@ const Registration = () => {
                 <option value="" disabled>
                   Who You are?
                 </option>
-                <option>CREATOR</option>
-                <option>FREELANCER</option>
+                <option>ROLE_CREATOR</option>
+                <option>ROLE_FREELANCER</option>
               </select>
 
               <button type="submit">Submit</button>

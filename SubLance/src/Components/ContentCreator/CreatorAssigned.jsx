@@ -11,11 +11,15 @@ const PostPage = () => {
   const postsPerPage = 10;
   const [selectedPost, setSelectedPost] = useState(null);
   const [isEllipsisMenuOpen, setIsEllipsisMenuOpen] = useState(false);
+
+  //http://localhost:8080/api/creator/assignedpost
+  // GET
+
   const{token} = useContext(AuthContext);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch("https://jsonplaceholder.typicode.com/posts" ,{
+        const response = await fetch("http://localhost:8080/api/creator/assignedposts" ,{
           method: 'GET',
           headers: {
             "Content-Type": "application/json",
@@ -23,10 +27,9 @@ const PostPage = () => {
           },
         });
         const data = await response.json();
+        console.log(data);
         setPosts(data.map(post => ({
           ...post,
-          fileUrl: post.fileUrl || `https://example.com/file${post.id}.pd`,
-          status: post.fileUrl ? "file_uploaded" : "in_progress" 
         })));
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -49,6 +52,7 @@ const PostPage = () => {
   const handleCloseModal = () => {
     setSelectedPost(null);
     setIsEllipsisMenuOpen(false);
+
   };
 
   const handlePrevious = () => {
@@ -60,6 +64,22 @@ const PostPage = () => {
   };
   const handleBackButton = () =>{
     navigate(-1);
+  };
+  const handleAccept = async(postId,update) =>{
+    try {
+      const response = await fetch(`http://localhost:8080/api/creator/proposal/${postId}/${update}` ,{
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+      console.log("SENT");
+    } catch (error) {
+      console.error("Error Accepting Post:", error);
+    }finally{
+      navigate(0);
+    }
   };
   return (
     <div className={styles.pageContainer}>
@@ -79,34 +99,31 @@ const PostPage = () => {
         {currentPosts.length > 0 ? (
               currentPosts.map((post) => (
                 <div key={post.id} className={styles.card}>
-                  <h3 className={styles.cardTitle}>POST NAME</h3>
+                  <h3 className={styles.cardTitle}>{post.name}</h3>
                   <p className={styles.cardRow}>
-                    <strong>Name: </strong> <span>{post.name}</span>
+                    <strong>Name: </strong> <span>{post.freelancer.name}</span>
                   </p>
                   <p className={styles.cardRow}>
-                    <strong> Ratings: </strong><span>{post.ratings}</span>
+                    <strong> Transcription Language: </strong><span>{post.transcriptionLang}</span>
                   </p>
                   <p className={styles.cardRow}>
-                    <strong>Bidding Amount:</strong> <span>{post.biddingAmount}</span>
+                    <strong>Audio Language: </strong> <span>{post.audioLang}</span>
                   </p>
                   <p className={styles.cardRow}>
-                    <strong>Total Work Completed: </strong><span>{post.totalWork}</span>
+                    <strong>DEADLINE: </strong><span>{post.deadline}</span>
                   </p>
                   <p className={styles.cardRow}>
                     <span className={styles.statusLabel}>
-                      {post.fileUrl ? (
                         <>
-                          <strong>File Uploaded</strong>
-                          <button
+                          <strong>{post.status=="ASSIGNED"?"IN PROGRESS":"FILE UPLOADED"}</strong>
+                          {post.status=="COMPLETED"?(<button
                             className={styles.viewDetailsButton}
                             onClick={() => setSelectedPost(post)}
                           >
                             View Details
-                          </button>
+                          </button>):""}
+                          
                         </>
-                      ) : (
-                        <strong>In Progress</strong>
-                      )}
                     </span>
                   </p>
 
@@ -114,16 +131,12 @@ const PostPage = () => {
                     <div className={styles.modalContainer}>
                       <div className={styles.detailsContainer} onClick={() => setIsEllipsisMenuOpen(false)}>
                         <h3>Post Details</h3>
-                        <p>{"sublance"}</p>
-                        <p>{"sublance"}</p>
-                        <p>{"sublance"}</p>
-                        <p>{"sublance"}</p>
-                        <p>{"sublance"}</p>
-                        {/* <p>{selectedPost.postName}</p> */}
-                        {/* <p>{selectedPost.name}</p> */}
-                        {/* <p>{selectedPost.ratings}</p>
-                        <p>{selectedPost.biddingAmount}</p>
-                        <p>{selectedPost.totalWork}</p> */}
+                        <br/>
+                        <p><b>Post Name :</b> {selectedPost.name}</p>
+                        <p><b>Freelancer Name:</b> {selectedPost.freelancer.name}</p>
+                        <br/>
+                        <br/>
+                        <br/>
                         
                         <div className={styles.ellipsisMenu}>
                           <span className={styles.ellipsisButton} onClick={handleEllipsisClick}>
@@ -138,13 +151,13 @@ const PostPage = () => {
                               >
                                 Download
                               </a>
-                              <button className={styles.redoButton}>
+                              <button className={styles.redoButton} onClick={() => handleAccept(selectedPost.id , "REDO")}>
                                 Redo
                               </button>
-                              <button className={styles.cancelButton}>
+                              <button className={styles.cancelButton} onClick={() => handleAccept(selectedPost.id , "CANCEL")}>
                                 Cancel Task
                               </button>
-                              <button className={styles.acceptButton} >
+                              <button className={styles.acceptButton} onClick={() => handleAccept(selectedPost.id , "ACCEPT")}>
                                 Accept
                               </button>
                             </div>
